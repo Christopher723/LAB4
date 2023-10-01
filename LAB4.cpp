@@ -184,9 +184,7 @@ class unorderedArrayListType: public arrayListType<elemType>
 
     public:
 
-        void insertAt(int location, const elemType& inserItem){
-            cout << "Yet to be implemented";
-        }
+        void insertAt(int location, const elemType& inserItem);
         void insertEnd(const elemType& insertItem);
         void replaceAt(int location, const elemType& repItem);
         int seqSearch(const elemType& searchItem) const;
@@ -197,6 +195,33 @@ class unorderedArrayListType: public arrayListType<elemType>
         unorderedArrayListType(int size = 100);
 
 };
+
+
+
+
+template <class elemType>
+void unorderedArrayListType<elemType>::insertAt(int location, const elemType& insertItem)
+{
+    if (this->isFull())
+    {
+        cout << "Cannot insert into a full list." << endl;
+        return;
+    }
+
+    if (location < 0 || location > this->listSize())
+    {
+        cout << "Invalid location for insertion." << endl;
+        return;
+    }
+
+    for (int i = this->listSize(); i > location; i--)
+    {
+        this->list[i] = this->list[i - 1];
+    }
+
+    this->list[location] = insertItem;
+    this->length++;
+}
 
 template <class elemType>
 unorderedArrayListType<elemType>::unorderedArrayListType(int size) : arrayListType<elemType>(size){}
@@ -266,48 +291,81 @@ void unorderedArrayListType<elemType>::replaceAt(int location, const elemType& r
 
 int main(){
 
-    unorderedArrayListType<string> stringList(25);
+    unorderedArrayListType<int> intList(25);
+    unorderedArrayListType<float> floatList(25);
 
-    string str;
+    float flt;
+    int myInt;
 
-    cout << "Line 9: Enter 5 strings: ";
+    cout << "Enter 5 Ints: ";
 
-    cin >> str;
-    stringList.insertEnd(str);
-    cin >> str;
-    stringList.insertEnd(str);
-    cin >> str;
-    stringList.insertEnd(str);
-    cin >> str;
-    stringList.insertEnd(str);
-    cin >> str;
-    stringList.insertEnd(str);
-    
+    for (int count = 0; count < 5; count++)
+    {
+        cin >> myInt;
+        intList.insertEnd(myInt);
+    }
     cout << endl;
 
 
-    stringList.print();
+    intList.print();
     cout << endl;
 
-    cout << "Enter string to be deleted: ";
-
-    cin >> str;
+    cout << "Enter int to be deleted: ";
+    cin >> myInt;
     cout << endl;
 
-    stringList.remove(str);
-    cout << "After removeing " << str << "stringList: ";
-    stringList.print();
+    intList.remove(myInt);
+    cout << "After removing " << myInt  << " from int list" <<endl; 
+    cout << "IntList: ";
+    intList.print();
     cout <<endl;
 
-    cout << " Search for the item: " ;
-    cin >> str;
+    cout << "Search for the item: " ;
+    cin >> myInt;
     cout << endl;
 
-    if (stringList.seqSearch(str) != -1)
-        cout << str << " Found in stringList" << endl;
-
+    if (intList.seqSearch(myInt) != -1)
+        cout << myInt << " Found in intList" << endl;
     else
-        cout << str << " is not in string list" << endl;
+        cout << myInt << " is not in intList" << endl;
+
+
+
+
+
+    cout << "Enter 5 floats: ";
+
+    for (int count = 0; count < 5; count++)
+    {
+        cin >> flt;
+        floatList.insertEnd(flt);
+    }
+    cout << endl;
+    floatList.print();
+
+    cout << endl;
+
+    cout << "Enter float to be deleted: ";
+    cin >> flt;
+    cout << endl;
+
+    floatList.remove(flt);
+    cout << "After removing " << flt  << " from float list" <<endl; 
+    cout << "floatList: ";
+    floatList.print();
+    cout <<endl;
+
+    cout << "Search for the item: " ;
+    cin >> flt;
+    cout << endl;
+
+    if (floatList.seqSearch(flt) != -1)
+        cout << flt << " Found in floatList" << endl;
+    else
+        cout << flt << " is not in floatList" << endl;
+
+
+
 
 
     return 0;
